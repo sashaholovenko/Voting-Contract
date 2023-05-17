@@ -26,9 +26,9 @@ contract VotingContract {
     }
 
     function vote(uint candidateId) public {
-        require(votingOpen, "Voting is closed");
+        require(votingOpen, "Voting is already closed");
         require(candidateId > 0 && candidateId <= getCandidatesCount(), "Invalid candidate ID");
-        require(!voters[msg.sender], "You have already voted");
+        require(!voters[msg.sender], "You have already voted!");
 
         candidates[candidateId].voteCount++;
         voters[msg.sender] = true;
@@ -42,7 +42,7 @@ contract VotingContract {
     }
 
     function closeVoting() public {
-        require(msg.sender == owner, "Only the contract owner can close voting");
+        require(msg.sender == owner, "Only owner of the contract can close voting");
         votingOpen = false;
     }
 }
